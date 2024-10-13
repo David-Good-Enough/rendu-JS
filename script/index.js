@@ -16,50 +16,57 @@ const coursesData = [
     },
   ]
 
-  const createElement = (elementName, attributes, childrenArray) => {
-    const element = document.createElement(elementName);
-    
-    attributes && Object.entries(attributes).forEach(([key, value]) => {element [key] = value});
-
-    childrenArray?.forEach(child => element.appendChild(child));
-
-    return element;
+  // Function to create elements
+const createElement = (elementName, attributes, childrenArray) => {
+  const element = document.createElement(elementName);
+  attributes && Object.entries(attributes).forEach(([key, value]) => { element[key] = value });
+  childrenArray?.forEach(child => element.appendChild(child));
+  return element;
 };
 
 
-  const body = document.querySelector('body');
+const showCourseDetails = (course) => {
 
-  const test = createElement('div')
+  body.innerHTML = '';
 
 
-  const image = createElement('img', {src: "../images/logo_ynov.webp", className: "image"});
-  image.addEventListener("click", (event) => location.reload())
   const header = createElement('header', { className: "header"}, [image]);
+  const backButton = createElement('p', { innerText: "< Retout à la liste", className: "bouton-retour" });
+  const courseTitle = createElement('h2', { className: "h2_details", innerText: course.name });
+  const courseDescription = createElement('p', { className: "p_details", innerText: course.description });
   
-  const h1 = createElement('h1', {className: "h1", innerText: "Les cours du module web avancé"});
 
-  const h2_1 = createElement('h2', { className: "h2", innerText: coursesData[0].name});
-  const p_1 = createElement('p', { className: "p", innerText: coursesData[0].description});
-  const button_1 = createElement('button', { innerText: "Get details"});
-  
-  const ul_1 = createElement('ul', { className: "ul"}, [h2_1, p_1, button_1]);
-
-  const h2_2 = createElement('h2', { className: "h2", innerText: coursesData[1].name});
-  const p_2 = createElement('p', { className: "p", innerText: coursesData[1].description});
-  const button_2 = createElement('button', { innerText: "Get details"});
-
-  const ul_2 = createElement('ul', { className: "ul"}, [h2_2, p_2, button_2]);
-
-  const h2_3 = createElement('h2', { className: "h2", innerText: coursesData[2].name});
-  const p_3 = createElement('p', { className: "p", innerText: coursesData[2].description});
-  const button_3 = createElement('button', { innerText: "Get details"});
-  
-  const ul_3 = createElement('ul', { className: "ul"}, [h2_3, p_3, button_3]);
-
-  const div_block = createElement('div', { className: "div_block"}, [ul_1, ul_2, ul_3])
+  backButton.addEventListener('click', () => location.reload());
 
 
-  body.append(header, h1, div_block, test);
+  body.append(header, backButton, courseTitle, courseDescription);
+};
+
+
+const loadCourseList = () => {
+  const header = createElement('header', { className: "header"}, [image]);
+  const h1 = createElement('h1', { className: "h1", innerText: "Les cours du module web avancé" });
+
+
+  const courseList = coursesData.map((course, index) => {
+    const courseName = createElement('h2', { className: "h2", innerText: course.name });
+    const courseDesc = createElement('p', { className: "p", innerText: course.description });
+    const detailsButton = createElement('button', { innerText: "Get details" });
+    
+    detailsButton.addEventListener('click', () => showCourseDetails(course));
+    
+    return createElement('ul', { className: "ul" }, [courseName, courseDesc, detailsButton]);
+  });
+
+  const div_block = createElement('div', { className: "div_block" }, courseList);
+  body.append(header, h1, div_block);
+};
+
+const body = document.querySelector('body');
+const image = createElement('img', { src: "../images/logo_ynov.webp", className: "image" });
+image.addEventListener("click", (event) => location.reload());
+
+loadCourseList();
 
 
 

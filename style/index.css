@@ -48,3 +48,13 @@ html, body {
     overflow-x: hidden;
 
 }
+
+.h2_details {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: left;   
+}
+
+.bouton-retour {
+    font-weight: bold;
+}
