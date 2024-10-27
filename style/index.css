@@ -57,4 +57,5 @@ html, body {
 
 .bouton-retour {
     font-weight: bold;
+    cursor: pointer;
 }
