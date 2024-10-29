@@ -1,3 +1,4 @@
+//////////////////////////////////////// Constante qui contient le texte
 const coursesData = [
     {
       name: 'Créer un SPA en Vanilla JS',
@@ -16,7 +17,7 @@ const coursesData = [
     },
   ]
 
-  // Function to create elements
+/////////////////////////////////////////// Fonction pour créer un élement
 const createElement = (elementName, attributes, childrenArray) => {
   const element = document.createElement(elementName);
   attributes && Object.entries(attributes).forEach(([key, value]) => { element[key] = value });
@@ -24,31 +25,29 @@ const createElement = (elementName, attributes, childrenArray) => {
   return element;
 };
 
-
+/////////////////////////////////////////// Fonction pour afficher les détails d'un cours
 const showCourseDetails = (course) => {
 
-  body.innerHTML = '';
-
-
-  const header = createElement('header', { className: "header"}, [image]);
+  divPrincipal.innerHTML = '';
+  
   const backButton = createElement('p', { innerText: "< Retout à la liste", className: "bouton-retour" });
   const courseTitle = createElement('h2', { className: "h2_details", innerText: course.name });
   const courseDescription = createElement('p', { className: "p_details", innerText: course.description });
-  
 
-  backButton.addEventListener('click', () => location.reload());
+  backButton.addEventListener('click', () => loadCourseList());
 
-
-  body.append(header, backButton, courseTitle, courseDescription);
+  divPrincipal.append(backButton, courseTitle, courseDescription);
 };
 
-
+///////////////////////////////////////////// Fonction pour afficher l'accueil
 const loadCourseList = () => {
-  const header = createElement('header', { className: "header"}, [image]);
+  divPrincipal.innerHTML = '';
+  
   const h1 = createElement('h1', { className: "h1", innerText: "Les cours du module web avancé" });
 
 
   const courseList = coursesData.map((course, index) => {
+    
     const courseName = createElement('h2', { className: "h2", innerText: course.name });
     const courseDesc = createElement('p', { className: "p", innerText: course.description });
     const detailsButton = createElement('button', { innerText: "Get details" });
@@ -59,12 +58,21 @@ const loadCourseList = () => {
   });
 
   const div_block = createElement('div', { className: "div_block" }, courseList);
-  body.append(header, h1, div_block);
+  divPrincipal.append(h1, div_block);
 };
 
+//////////////////////////////////////////// Initialisation du header et de l'affichage
 const body = document.querySelector('body');
+
+// header
 const image = createElement('img', { src: "../images/logo_ynov.webp", className: "image" });
-image.addEventListener("click", (event) => location.reload());
+const header = createElement('header', { className: "header"}, [image]);
+image.addEventListener("click", (event) => loadCourseList());
+
+// passer par une sous div pour éviter d'éfaccer le header
+const divPrincipal = createElement('div', { className: "divPrincipal"});
+
+body.append(header, divPrincipal);
 
 loadCourseList();
 

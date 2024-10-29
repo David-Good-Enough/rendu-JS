@@ -7,6 +7,7 @@
     width: 10%;
     height: 10%;
     margin: 5px;
+    cursor: pointer;
 }
 
 .h1, .ul {
